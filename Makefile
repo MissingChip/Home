@@ -10,11 +10,16 @@ revsync: revconfig
 .PHONY: revsync
 
 config:
-	rsync -av $(patsubst %, config/%/, $(CONFIG_FILES)) $(DESTINATION)/.config/
+	for cfgdir in $(CONFIG_FILES) ; do \
+		rsync -av --delete config/$$cfgdir/ $(DESTINATION)/.config/$$cfgdir ; \
+	done
 .PHONY: config
 
 dotfiles:
-	rsync -av $(patsubst %, --exclude="%", $(EXCLUDE)) ./ $(DESTINATION)
+	for dotfile in $(shell ls dot) ; do \
+		cp dot/$$dotfile $(DESTINATION)/.$$dotfile ; \
+	done
+
 .PHONY: dotfiles
 
 revconfig:
