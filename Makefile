@@ -2,7 +2,7 @@
 DESTINATION := $(HOME)
 DEST_CONFIG := $(DESTINATION)/.config
 OUR_CONFIG := config
-EXCLUDE := dot config .git Makefile README.md
+EXCLUDE := dot config .git Makefile README.md sync.sh
 CONFIG_FILES := $(shell ls -A $(OUR_CONFIG))
 RAW_DOTFILES := $(filter-out $(EXCLUDE), $(shell ls -A))
 COOK_DOTFILES := $(shell ls -A dot)
@@ -19,6 +19,8 @@ RSYNCFLAGS := -a
 endif
 
 sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES)
+	# Make uses `sh` by default, the following chooses the user's shell and runs it on any file matchin sync.*
+	$(shell echo $$SHELL) $(wildcard sync.*)
 .PHONY: sync
 
 $(DESTINATION):
