@@ -34,5 +34,5 @@ $(DESTINATION)/.%: dot/% | $(DESTINATION)
 	cp $< $@
 
 $(DEST_CONFIG)/%: $(OUR_CONFIG)/% | $(DEST_CONFIG)
-	rsync -a $(RSYNCFLAGS) $</ $@/
+	rsync $(RSYNCFLAGS) $</ $@/
 
