@@ -1,3 +1,3 @@
 
-ln -sfn $HOME/.config/nvim/init.vim $HOME/.vimrc 
+ln -sfn $1/.config/nvim/init.vim $1/.vimrc 
 

@@ -22,8 +22,8 @@ endif
 sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES) $(SYNC_FILES)
 .PHONY: sync
 
-sync.%:
-	$(patsubst sync.%, %, $@) $@ 0
+$(SYNC_FILES):
+	$(patsubst sync.%, %, $@) $@ $(DESTINATION)
 .PHONY: $(SYNC_FILES)
 
 $(DESTINATION):
