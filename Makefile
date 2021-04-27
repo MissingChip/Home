@@ -13,9 +13,9 @@ DEST_COOK_DOTFILES := $(COOK_DOTFILES:%=$(DESTINATION)/.%)
 
 DELETE = true
 ifeq ($(DELETE), true)
-DELETE_ARG := --delete
+RSYNCFLAGS := -a --delete
 else
-DELETE_ARG := 
+RSYNCFLAGS := -a
 endif
 
 sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES)
@@ -34,5 +34,5 @@ $(DESTINATION)/.%: dot/% | $(DESTINATION)
 	cp $< $@
 
 $(DEST_CONFIG)/%: $(OUR_CONFIG)/% | $(DEST_CONFIG)
-	rsync -a $(DELETE_ARG) $</ $@/
+	rsync -a $(RSYNCFLAGS) $</ $@/
 

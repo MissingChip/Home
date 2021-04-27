@@ -2,7 +2,8 @@
 " turn on mouse
 set mouse=a
 " tab spacing
-set tabstop=4 shiftwidth=4 expandtab
+set tabstop=4 shiftwidth=4 softtabstop=4
+set expandtab
 set autoindent
 
 "remap leader key to space for convenience
