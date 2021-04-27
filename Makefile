@@ -23,8 +23,8 @@ sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES) $(SYNC_FIL
 .PHONY: sync
 
 sync.%:
-	touch $@
 	$(patsubst sync.%, %, $@) $@ 0
+.PHONY: $(SYNC_FILES)
 
 $(DESTINATION):
 	mkdir -p $(DESTINATION)
