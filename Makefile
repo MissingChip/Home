@@ -19,11 +19,12 @@ else
 RSYNCFLAGS := -a
 endif
 
-	# Make uses `sh` by default, the following chooses the user's shell and runs it on any file matching sync.*
-	# This might not be desired behavior, maybe you want to always use sh. I might change it to something like that.
 sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES) $(SYNC_FILES)
-	$(shell echo $$SHELL) $(SYNC_FILES)
 .PHONY: sync
+
+sync.%:
+	touch $@
+	$(patsubst sync.%, %, $@) $@ 0
 
 $(DESTINATION):
 	mkdir -p $(DESTINATION)
