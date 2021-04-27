@@ -1,21 +1,31 @@
 
-DESTINATION = $(HOME)
-EXCLUDE = config .git Makefile
-CONFIG_FILES = $(shell ls -A config)
+DESTINATION := $(HOME)
+DEST_CONFIG := $(DESTINATION)/.config
+OUR_CONFIG := config
+EXCLUDE := dot config .git Makefile README.md
+CONFIG_FILES := $(shell ls -A $(OUR_CONFIG))
+RAW_DOTFILES := $(filter-out $(EXCLUDE), $(shell ls -A))
+COOK_DOTFILES := $(shell ls -A dot)
 
-sync: config dotfiles
+DEST_CONFIG_FILES := $(CONFIG_FILES:%=$(DEST_CONFIG)/%)
+DEST_RAW_DOTFILES := $(RAW_DOTFILES:%=$(DESTINATION)/%)
+DEST_COOK_DOTFILES := $(COOK_DOTFILES:%=$(DESTINATION)/.%)
+
+sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES)
 .PHONY: sync
 
-revsync: revconfig
-.PHONY: revsync
+$(DESTINATION):
+	mkdir -p $(DESTINATION)
 
-config:
-	$(foreach cfgdir, $(CONFIG_FILES), rsync -av --delete config/$(cfgdir)/ $(DESTINATION)/.config/$(cfgdir);)
-.PHONY: config
+$(DEST_CONFIG):
+	mkdir -p $(DEST_CONFIG)
 
-dotfiles:
-	$(foreach dotfile, $(shell ls dot), cp dot/$(dotfile) $(DESTINATION)/.$(dotfile);)
-.PHONY: dotfiles
+$(DESTINATION)/.%: .% $(DESTINATION)
+	cp $< $@
 
-revconfig:
-	rsync -av $(patsubst %, $(DESTINATION)/.config/%, $(CONFIG_FILES)) config/
+$(DESTINATION)/.%: dot/% $(DESTINATION)
+	cp $< $@
+
+$(DEST_CONFIG)/%: $(OUR_CONFIG)/% $(DESTINATION) $(DEST_CONFIG)
+	rsync -a $</ $@/
+

@@ -1,0 +1,18 @@
+[user]
+	email = sometimescode@gmail.com
+	name = Ethan Ferguson
+[alias]
+	coa = commit -a -m
+	all = add -A
+	co = commit
+	graph = log --graph --oneline --all
+	st = status
+	ca = commit -a
+	sub = submodule
+	rev = rev-parse HEAD
+	ch = checkout
+	br = branch
+[pull]
+	ff = only
+[init]
+	defaultBranch = main
