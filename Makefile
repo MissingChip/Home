@@ -2,7 +2,8 @@
 DESTINATION := $(HOME)
 DEST_CONFIG := $(DESTINATION)/.config
 OUR_CONFIG := config
-EXCLUDE := dot config .git Makefile README.md sync.sh
+SYNC_FILES := $(wildcard sync.*)
+EXCLUDE := dot config .git Makefile README.md $(SYNC_FILES)
 CONFIG_FILES := $(shell ls -A $(OUR_CONFIG))
 RAW_DOTFILES := $(filter-out $(EXCLUDE), $(shell ls -A))
 COOK_DOTFILES := $(shell ls -A dot)
@@ -18,9 +19,10 @@ else
 RSYNCFLAGS := -a
 endif
 
-sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES)
-	# Make uses `sh` by default, the following chooses the user's shell and runs it on any file matchin sync.*
-	$(shell echo $$SHELL) $(wildcard sync.*)
+	# Make uses `sh` by default, the following chooses the user's shell and runs it on any file matching sync.*
+	# This might not be desired behavior, maybe you want to always use sh. I might change it to something like that.
+sync: $(DEST_CONFIG_FILES) $(DEST_RAW_DOTFILES) $(DEST_COOK_DOTFILES) $(SYNC_FILES)
+	$(shell echo $$SHELL) $(SYNC_FILES)
 .PHONY: sync
 
 $(DESTINATION):
