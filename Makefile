@@ -28,10 +28,10 @@ $(DEST_CONFIG):
 	mkdir -p $(DEST_CONFIG)
 
 $(DESTINATION)/.%: .% | $(DESTINATION)
-	cp $< $@
+	cp -P $< $@
 
 $(DESTINATION)/.%: dot/% | $(DESTINATION)
-	cp $< $@
+	cp -P $< $@
 
 $(DEST_CONFIG)/%: $(OUR_CONFIG)/% | $(DEST_CONFIG)
 	rsync $(RSYNCFLAGS) $</ $@/
