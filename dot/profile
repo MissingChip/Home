@@ -26,6 +26,4 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.local/share/applications
-
 source "$HOME/.cargo/env"
